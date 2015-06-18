@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="react.js"></script>
+    <script src="JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/jsx">
+      
+        var TestDialog = React.createClass ({
+            getInitialState:function(){
+                return {
+                    data:[]
+                };
+            },
+            removeClick:function(index){
+                this.state.data.splice(index,1);
+                this.setState();
+            },
+            addClick:function(){
+                var val = React.findDOMNode(this.refs.input).value;
+                this.state.data.push(val);
+                this.setState();
+            },
+            render:function(){
+                var divs = [];
+                for( var i = 0 ; i != this.state.data.length ; ++i ){
+                    divs.push(
+                        <div>
+                            <span>{this.state.data[i]}</span>
+                            <button onClick={this.removeClick.bind(this,i)}>删除</button>
+                        </div>
+                    );
+                }
+                return (
+                    <div>
+                        <div>
+                            <input type="text" ref="input"/>
+                            <button onClick={this.addClick}>添加</button>
+                        </div>
+                        {divs}
+                    </div>
+                );
+            }
+        });
+
+        React.render(
+            <TestDialog/>,
+            document.getElementById('example')
+        );
+    </script>
+  </body>
+</html>

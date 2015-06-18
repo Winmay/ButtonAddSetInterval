@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="react.js"></script>
+    <script src="JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/jsx">
+    /*
+        var TestInputTimer = React.createClass ({
+            getInitialState: function(){
+                return {
+                    time:'',
+                    adddata: false
+                };
+            },
+
+            addTimer: function(){
+                var val = React.findDOMNode(this.refs.input).value;
+
+                this.setState({
+                    time: val,
+                    adddata: true
+                });
+
+                this.timeloading = setInterval(this.onTimer,1000);
+            },
+
+            onTimer: function(){
+                if(this.state.time > 0) {
+                    this.setState({
+                        time: this.state.time-1
+                    });
+                }else{
+                    clearInterval(this.timeloading);
+                    this.setState({
+                        adddata: false
+                    });
+                }
+            },
+
+            render: function() {
+
+                if(this.state.adddata){
+                    var showTime = this.state.time;
+                }else{
+                    var showTime = null;
+                }
+                return (
+                    <div>
+                        <input type="text" ref="input" />
+                        <button onClick={this.addTimer}>添加</button>
+                        <h1>{showTime}</h1>
+                    </div>
+                );
+            }
+        });
+
+        React.render(
+            <TestInputTimer />,
+            document.getElementById('example')
+        );
+    */
+
+        var TimerInterval = React.createClass ({
+
+            getInitialState: function(){
+                return {
+                    time: this.props.timeData,
+                    adddata: false
+                };
+            },
+
+            componentDidMount: function(){
+                this.setState ({
+                    adddata: true
+                });
+
+                this.timeloading = setInterval(this.onTimer,1000);
+            },
+
+            onTimer: function(){
+                if(this.state.time > 0) {
+                    this.setState({
+                        time: this.state.time-1
+                    });
+                }else{
+                    clearInterval(this.timeloading);
+                    this.setState ({
+                        adddata: false
+                    });
+                };
+            },
+
+            render: function() {
+
+                if(this.state.adddata){
+                    var showTime = this.state.time;
+                }else{
+                    var showTime = null;
+                }
+
+                return (
+                    <h1>{showTime}</h1>
+                );
+            }
+
+        });
+
+        var TestInputTimer = React.createClass ({
+
+            getInitialState: function(){
+                return {
+                    addtime:[]
+                };
+            },
+
+            addTimer: function(){
+                var val = React.findDOMNode(this.refs.input).value;
+                this.state.addtime.push(val);
+                this.setState();
+            },
+
+            render: function() {
+
+                var timePutin = [];
+                for( var i = 0 ; i != this.state.addtime.length ; ++i ){
+                    timePutin.push(
+                        <TimerInterval timeData={this.state.addtime[i]} />
+                    );
+                }
+                
+                return (
+                    <div>
+                        <input type="text" ref="input" />
+                        <button onClick={this.addTimer}>添加</button>
+                        {timePutin}
+                    </div>
+                );
+            }
+        });
+
+        React.render(
+            <TestInputTimer />,
+            document.getElementById('example')
+        );
+    </script>
+  </body>
+</html>
